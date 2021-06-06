@@ -1,0 +1,18 @@
+img{
+    width: 300px;
+    height: 300px;
+  }
+   img{
+    margin-right: 60px;
+
+  }  
+
+  #result-section{
+      float: left;
+  }
+
+  #vote-section{
+    margin-left: 10px;
+
+
+  }
