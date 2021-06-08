@@ -61,6 +61,8 @@ let goats = [];
 
 function render() {
 
+
+
     leftImageIndex = random();
     middleImageIndex = random();
     rightImageIndex = random();
@@ -99,7 +101,10 @@ function render() {
 
     console.log(goats);
 
+
 }
+
+
 
 render();
 
@@ -109,6 +114,9 @@ divElement.addEventListener('click', voting)
 // leftImageElement.addEventListener('click',voting);
 // rightImageElement.addEventListener('click',voting);
 // middleImageElement.addEventListener('click',voting);
+
+
+
 
 
 function voting(event) {
@@ -140,34 +148,47 @@ function voting(event) {
         render();
     }
     else {
+
+        storage();
+
         divElement.removeEventListener('click', voting);
 
 
-        for (let i = 0; i < Product.allProduct.length; i++) {
-            votes.push(Product.allProduct[i].votes);
-            repeat.push(Product.allProduct[i].repeat);
+        // for (let i = 0; i < Product.allProduct.length; i++) {
+        //     votes.push(Product.allProduct[i].votes);
+        //     repeat.push(Product.allProduct[i].repeat);
 
-        }
+        // }
 
         let finalResult = document.getElementById('show-result')
         finalResult.hidden = false;
-        chart();
+        // chart();
         finalResult.addEventListener('click', result)
 
         function result(event) {
+            console.log('hello');
             let ulElement = document.getElementById('result');
             for (let i = 0; i < Product.allProduct.length; i++) {
                 let liElement = document.createElement('li');
                 ulElement.appendChild(liElement);
                 liElement.textContent = `${Product.allProduct[i].name} has ${Product.allProduct[i].votes} votes and was seen ${Product.allProduct[i].repeat} times.`
-            }
+                finalResult.removeEventListener('click', result);
 
+            }
+            chart();
         }
     }
 }
 
 
+
 function chart() {
+
+    for (let i = 0; i < Product.allProduct.length; i++) {
+        votes.push(Product.allProduct[i].votes);
+        repeat.push(Product.allProduct[i].repeat);
+
+    }
 
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
@@ -226,3 +247,31 @@ function chart() {
         }
     })
 }
+
+
+/////////////storing the data in the local storage 
+//////function name 1
+////////////turn the empty array(the one we push all the construter function into into it) tp string
+//////////////////////localstorage.setitem('string',string array)
+/////////////finding the right place to call the function (in constructure function or somplace else)
+function storage() {
+    let string = JSON.stringify(Product.allProduct);
+    localStorage.setItem('product', string)
+
+}
+
+///////////////////making the old storage to apper after refreash
+//////////////////localstorage get item
+/////////////////turn the 
+function show() {
+    let data = localStorage.getItem('product');
+    let productData = JSON.parse(data);
+    console.log(productData);
+    if (Product.allProduct !== null) {
+        Product.allProduct = productData;
+    }
+    chart();
+}
+
+show();
+console.log(Product.allProduct);
