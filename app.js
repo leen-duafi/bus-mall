@@ -265,11 +265,14 @@ function storage() {
 /////////////////turn the 
 function show() {
     let data = localStorage.getItem('product');
-    let productData = JSON.parse(data);
-    console.log(productData);
-    if (Product.allProduct !== null) {
-        Product.allProduct = productData;
-    }
+    if (data){
+
+    
+     Product.allProduct = JSON.parse(data);}
+    
+    // if (Product.allProduct !== null) {
+    //     Product.allProduct = productData;
+    // }
     chart();
 }
 
